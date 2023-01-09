@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "72e88b50-a1fd-43d2-bd5c-0cde379022cd"
+      }
+    },
+    "owner": "nicobocq"
   }
 }
