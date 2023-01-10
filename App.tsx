@@ -1,14 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Text, View } from 'react-native';
+import * as React from 'react';
+import { Provider } from 'react-redux';
 
-const App = () => {
+import Weather from './src/App';
+import { store } from './src/store';
+
+export default function App() {
   return (
-    <View className="bg-gray-500 flex-1 justify-center items-center">
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Weather />
+    </Provider>
   );
-};
-
-export default App;
+}
