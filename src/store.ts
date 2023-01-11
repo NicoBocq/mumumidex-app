@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { weatherApi } from './api';
+import { weatherApi } from './services/api';
+import uiSlice from './uiSlice';
 
 const rootReducer = combineReducers({
   [weatherApi.reducerPath]: weatherApi.reducer,
+  ui: uiSlice,
 });
 
 export const store = configureStore({
@@ -13,3 +15,5 @@ export const store = configureStore({
 });
 
 setupListeners(store.dispatch);
+
+export type RootState = ReturnType<typeof rootReducer>;

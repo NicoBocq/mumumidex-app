@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { getHumidex } from '../utils';
+
 export type Main = {
   temp: number;
   feels_like: number;
@@ -16,11 +18,9 @@ export type Weather = {
   icon: string;
   name: string;
   humidex: number;
-};
-
-const getHumidex = ({ temp, humidity }) => {
-  const e = 6.112 * Math.pow(10, (7.5 * temp) / (237.7 + temp)) * (humidity / 100);
-  return Math.round(temp + (5 / 9) * (e - 10));
+  sys: {
+    country: string;
+  };
 };
 
 export const weatherApi = createApi({
@@ -30,11 +30,11 @@ export const weatherApi = createApi({
     getWeatherByCity: builder.query<Weather, string>({
       query: (city) => `weather?q=${city}&appid=1f1513e990129451ff67e76acc2d7100&units=metric`,
     }),
-    getWeatherByCities: builder.query<Weather[], void>({
-      query: () => ({
+    getWeatherByIds: builder.query<Weather[], string>({
+      query: (ids) => ({
         url: 'group',
         params: {
-          id: '524901,703448,2643743',
+          id: ids,
           appid: '1f1513e990129451ff67e76acc2d7100',
           units: 'metric',
         },
@@ -48,12 +48,12 @@ export const weatherApi = createApi({
         });
       },
     }),
-    getCityId: builder.query<number, string>({
+    getCityId: builder.mutation<number, string>({
       query: (city) => `weather?q=${city}&appid=1f1513e990129451ff67e76acc2d7100&units=metric`,
       transformResponse: (response: { id: number }) => response.id,
     }),
   }),
 });
 
-export const { useGetWeatherByCityQuery, useGetCityIdQuery, useGetWeatherByCitiesQuery } =
+export const { useGetWeatherByCityQuery, useGetCityIdMutation, useGetWeatherByIdsQuery } =
   weatherApi;
