@@ -1,27 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+import { Weather } from '../types';
 import { getHumidex } from '../utils';
-
-export type Main = {
-  temp: number;
-  feels_like: number;
-  temp_min: number;
-  temp_max: number;
-  pressure: number;
-  humidity: number;
-};
-
-export type Weather = {
-  id: number;
-  main: Main;
-  description: string;
-  icon: string;
-  name: string;
-  humidex: number;
-  sys: {
-    country: string;
-  };
-};
 
 export const weatherApi = createApi({
   reducerPath: 'weatherApi',
@@ -40,12 +20,14 @@ export const weatherApi = createApi({
         },
       }),
       transformResponse: (response: { list: Weather[] }) => {
-        return response.list.map((weather) => {
-          return {
-            ...weather,
-            humidex: getHumidex({ temp: weather.main.temp, humidity: weather.main.humidity }),
-          };
-        });
+        return response.list
+          .map((weather) => {
+            return {
+              ...weather,
+              humidex: getHumidex({ temp: weather.main.temp, humidity: weather.main.humidity }),
+            };
+          })
+          .sort((a, b) => b.humidex - a.humidex);
       },
     }),
     getCityId: builder.mutation<number, string>({

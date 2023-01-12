@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import { weatherApi } from './services/api';
+import { weatherApi } from './services/weatherApi';
 import { RootState } from './store';
 
 const initialState = {
