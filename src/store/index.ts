@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { weatherApi } from './services/weatherApi';
-import uiSlice from './uiSlice';
+import uiSlice from '../reducers/uiSlice';
+import { weatherApi } from '../services/weatherApi';
 
 const rootReducer = combineReducers({
   [weatherApi.reducerPath]: weatherApi.reducer,

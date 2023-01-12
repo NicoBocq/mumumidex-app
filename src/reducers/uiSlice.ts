@@ -1,7 +1,7 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import { weatherApi } from './services/weatherApi';
-import { RootState } from './store';
+import { weatherApi } from '../services/weatherApi';
+import { RootState } from '../store';
 
 const initialState = {
   ids: [524901, 703448, 2643743, 2995468],
@@ -12,6 +12,9 @@ export const uiSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addMatcher(weatherApi.endpoints.getCityId.matchFulfilled, (state, action) => {
+      if (state.ids.includes(action.payload)) {
+        return;
+      }
       state.ids.push(action.payload);
     });
   },
