@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Weather } from '../types';
+import { City, Weather } from '../types';
 import { getHumidex } from '../utils';
 
 export const weatherApi = createApi({
@@ -15,7 +15,7 @@ export const weatherApi = createApi({
           id: ids,
           appid: '1f1513e990129451ff67e76acc2d7100',
           units: 'metric',
-          lang: 'fr',
+          lang: 'en',
         },
       }),
       providesTags: (result) =>
@@ -31,19 +31,20 @@ export const weatherApi = createApi({
           .sort((a, b) => b.humidex - a.humidex);
       },
     }),
-    getCityId: builder.mutation<number, string>({
+    getCities: builder.query<City[], string>({
       query: (city) => ({
-        url: 'weather',
+        url: 'find',
         params: {
           q: city,
           appid: '1f1513e990129451ff67e76acc2d7100',
-          units: 'metric',
-          lang: 'fr',
+          lang: 'en',
         },
       }),
-      transformResponse: (response: { id: number }) => response.id,
+      transformResponse: (response: { list: City[] }) => {
+        return response.list;
+      },
     }),
   }),
 });
 
-export const { useGetCityIdMutation, useGetWeatherByIdsQuery } = weatherApi;
+export const { useGetCitiesQuery, useGetWeatherByIdsQuery } = weatherApi;

@@ -1,29 +1,47 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
-import { Button, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import Autocomplete from 'react-native-autocomplete-input';
 
 import { RootStackParamList } from '../RootApp';
-import { useGetCityIdMutation } from '../services/weatherApi';
+import { useAppDispatch } from '../hooks/redux';
+import { addCityId } from '../reducers/uiSlice';
+import { useGetCitiesQuery } from '../services/weatherApi';
+import { City } from '../types';
 
 type AddScreenProps = NativeStackScreenProps<RootStackParamList, 'Add'>;
 
 const Add = ({ navigation }: AddScreenProps): JSX.Element => {
-  const [city, setCity] = React.useState('');
-  const [addCityId, { isLoading: isLoadingCity }] = useGetCityIdMutation();
-  const handlePress = () => {
-    addCityId(city);
+  const [city, setCity] = useState<string>('');
+  const { data, isLoading: isLoadingCity } = useGetCitiesQuery(city, {
+    skip: city.length <= 3,
+  });
+  const dispatch = useAppDispatch();
+
+  const handleSelect = (item: City) => {
+    dispatch(addCityId(item.id));
     navigation.goBack();
   };
 
   return (
-    <View className="bg-gray-100 flex-1 p-4">
-      <TextInput
-        className="border-2 border-gray-300 rounded-lg p-2 m-2"
-        placeholder="SALUT"
-        value={city}
-        onChangeText={setCity}
-      />
-      <Button title="Add" onPress={handlePress} disabled={isLoadingCity} />
+    <View className="bg-gray-100 flex-1 p-4 relative">
+      <View className="absolute inset-0 flex-1 z-1">
+        <Autocomplete
+          data={data}
+          value={city}
+          onChangeText={setCity}
+          flatListProps={{
+            keyExtractor: (item: City) => item.id.toString(),
+            renderItem: ({ item }) => (
+              <TouchableOpacity onPress={() => handleSelect(item)}>
+                <Text className="p-2 text-base text-gray-900">
+                  {item.name} {item.sys.country}
+                </Text>
+              </TouchableOpacity>
+            ),
+          }}
+        />
+      </View>
     </View>
   );
 };

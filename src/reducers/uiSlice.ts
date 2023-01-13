@@ -10,15 +10,21 @@ const initialState = {
 export const uiSlice = createSlice({
   name: 'ui',
   initialState,
-  extraReducers: (builder) => {
-    builder.addMatcher(weatherApi.endpoints.getCityId.matchFulfilled, (state, action) => {
+  // extraReducers: (builder) => {
+  //   builder.addMatcher(weatherApi.endpoints.getCityId.matchFulfilled, (state, action) => {
+  //     if (state.ids.includes(action.payload)) {
+  //       return;
+  //     }
+  //     state.ids.push(action.payload);
+  //   });
+  // },
+  reducers: {
+    addCityId: (state, action) => {
       if (state.ids.includes(action.payload)) {
         return;
       }
       state.ids.push(action.payload);
-    });
-  },
-  reducers: {
+    },
     removeCity: (state, action) => {
       state.ids = state.ids.filter((id) => id !== action.payload);
     },
@@ -27,7 +33,7 @@ export const uiSlice = createSlice({
 
 export default uiSlice.reducer;
 
-export const { removeCity } = uiSlice.actions;
+export const { removeCity, addCityId } = uiSlice.actions;
 
 const selectUiState = (state: RootState) => state.ui;
 
