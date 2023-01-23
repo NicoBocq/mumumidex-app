@@ -18,7 +18,7 @@ const MHeader = (props: NativeStackHeaderProps): JSX.Element => {
   return (
     <>
       <StatusBar barStyle="light-content" translucent />
-      <View className="p-4 bg-red-900 flex-row items-center justify-between">
+      <View className="h-12 bg-red-900 flex-row items-center justify-between">
         {back && <MButton title="back" onPress={handleBack} />}
         <Text className="text-3xl text-white">{options.title}</Text>
         <MButton title="add" onPress={handleAdd} />

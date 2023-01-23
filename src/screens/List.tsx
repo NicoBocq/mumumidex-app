@@ -3,20 +3,18 @@ import React from 'react';
 import { Button, FlatList, Text, View } from 'react-native';
 
 import { RootStackParamList } from '../RootApp';
+import MButton from '../components/MButton';
 import WeatherItem from '../components/WeatherItem';
-import { useAppSelector } from '../hooks';
-import { selectIds } from '../reducers/uiSlice';
-import { useGetWeatherByIdsQuery } from '../services/weatherApi';
-
+import { useAppSelector } from '../hooks/redux';
+import { selectIds } from '../reducers/citiesSlice';
+import { selectAll, useGetWeatherByIdsQuery } from '../services/weatherApi';
+import { useSelector } from 'react-redux';
 type ListScreenProps = NativeStackScreenProps<RootStackParamList, 'List'>;
 
 const List = ({ navigation }: ListScreenProps): JSX.Element => {
   const ids = useAppSelector(selectIds);
-  const { data, error, isLoading } = useGetWeatherByIdsQuery(ids);
-
-  const handleNavigate = () => {
-    navigation.navigate('Add');
-  };
+  const { data, error, isLoading, refetch } = useGetWeatherByIdsQuery(ids);
+  // const data = useSelector(selectAll);
 
   if (isLoading) {
     return (
@@ -32,9 +30,10 @@ const List = ({ navigation }: ListScreenProps): JSX.Element => {
         data={data}
         ItemSeparatorComponent={() => <View className="h-4" />}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <WeatherItem item={item} />}
+        refreshing={isLoading}
+        onRefresh={refetch}
+        renderItem={({ item }) => <WeatherItem item={item} navigation={navigation} />}
       />
-      <Button title="Add" onPress={handleNavigate} />
     </View>
   );
 };

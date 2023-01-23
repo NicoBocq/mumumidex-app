@@ -5,15 +5,15 @@ import Autocomplete from 'react-native-autocomplete-input';
 
 import { RootStackParamList } from '../RootApp';
 import { useAppDispatch } from '../hooks/redux';
-import { addCityId } from '../reducers/uiSlice';
-import { useGetCitiesQuery } from '../services/weatherApi';
+import { addCityId } from '../reducers/citiesSlice';
+import { useFindCityQuery } from '../services/weatherApi';
 import { City } from '../types';
 
 type AddScreenProps = NativeStackScreenProps<RootStackParamList, 'Add'>;
 
 const Add = ({ navigation }: AddScreenProps): JSX.Element => {
   const [city, setCity] = useState<string>('');
-  const { data, isLoading: isLoadingCity } = useGetCitiesQuery(city, {
+  const { data, isLoading: isLoadingCity } = useFindCityQuery(city, {
     skip: city.length <= 3,
   });
   const dispatch = useAppDispatch();

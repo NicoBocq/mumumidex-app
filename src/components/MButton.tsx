@@ -28,9 +28,9 @@ const MButton = (props: MButtonProps): JSX.Element => {
   };
 
   const spacing = {
-    small: 'p-1',
-    medium: 'p-2',
-    large: 'p-4',
+    small: 'py-0.5 px-1',
+    medium: 'py-1 px-2',
+    large: 'py-2 px-4',
   };
 
   const wrapperClass = `${bgColor[theme]} ${textColor[theme]} ${spacing[size]} rounded-lg flex-row items-center justify-center`;
