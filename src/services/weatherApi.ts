@@ -3,16 +3,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { City, Weather } from '../types';
 import { getHumidex } from '../utils';
 
+// const weatherAdapter = createEntityAdapter();
+// const initialState = weatherAdapter.getInitialState();
+
 export const weatherApi = createApi({
   reducerPath: 'weatherApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.openweathermap.org/data/2.5/' }),
   tagTypes: ['Weather'],
   endpoints: (builder) => ({
-    getWeatherByIds: builder.query<Weather[], string>({
+    getWeatherByIds: builder.query<Weather[], number[]>({
       query: (ids) => ({
         url: 'group',
         params: {
-          id: ids,
+          id: ids.join(','),
           appid: '1f1513e990129451ff67e76acc2d7100',
           units: 'metric',
           lang: 'en',
@@ -29,9 +32,10 @@ export const weatherApi = createApi({
             };
           })
           .sort((a, b) => b.humidex - a.humidex);
+        // return weatherAdapter.setAll(initialState, result);
       },
     }),
-    getCities: builder.query<City[], string>({
+    findCity: builder.query<City[], string>({
       query: (city) => ({
         url: 'find',
         params: {
@@ -47,4 +51,4 @@ export const weatherApi = createApi({
   }),
 });
 
-export const { useGetCitiesQuery, useGetWeatherByIdsQuery } = weatherApi;
+export const { useFindCityQuery, useGetWeatherByIdsQuery } = weatherApi;
