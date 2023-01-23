@@ -12,18 +12,18 @@ import {
   REGISTER,
 } from 'redux-persist';
 
-import uiSlice from '../reducers/uiSlice';
+import citiesSlice from '../reducers/citiesSlice';
 import { weatherApi } from '../services/weatherApi';
 
 const rootReducer = combineReducers({
   [weatherApi.reducerPath]: weatherApi.reducer,
-  ui: uiSlice,
+  cities: citiesSlice,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['ui'],
+  whitelist: ['cities'],
   blacklist: [weatherApi.reducerPath],
 };
 
