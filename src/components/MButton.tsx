@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import tw from 'twrnc';
 
 export type MButtonProps = {
   onPress?: () => void;
@@ -8,15 +9,30 @@ export type MButtonProps = {
   icon?: React.ReactNode | string;
   loading?: boolean;
   disabled?: boolean;
-  theme?: 'primary' | 'secondary' | 'outlined';
-  size?: 'small' | 'medium' | 'large';
+  theme?: Theme;
+  variant?: Variant;
+  size?: Size;
+  style?: string;
 };
+export type Size = 'small' | 'medium' | 'large';
+export type Theme = 'primary' | 'secondary';
+export type Variant = 'ghost' | 'outline' | 'solid';
 
 const MButton = (props: MButtonProps): JSX.Element => {
-  const { title, onPress, children, loading, disabled, theme = 'primary', size = 'large' } = props;
+  const {
+    title,
+    onPress,
+    children,
+    loading,
+    disabled,
+    variant = 'solid',
+    theme = 'primary',
+    size = 'large',
+    style,
+  } = props;
 
   const bgColor = {
-    primary: 'bg-red-500',
+    primary: 'bg-brand',
     secondary: 'bg-gray-300',
     outlined: 'bg-transparent',
   };
@@ -33,12 +49,18 @@ const MButton = (props: MButtonProps): JSX.Element => {
     large: 'py-2 px-4',
   };
 
-  const wrapperClass = `${bgColor[theme]} ${textColor[theme]} ${spacing[size]} rounded-lg flex-row items-center justify-center`;
-  const textWrapperClass = 'flex-row items-center justify-center';
+  const wrapperStyle = tw.style(
+    'rounded-lg flex-row items-center justify-center',
+    style,
+    bgColor[theme],
+    spacing[size]
+  );
+  const textwrapperStyle = tw.style('flex-row items-center justify-center');
+  const textStyle = tw.style('text-white font-semibold text-lg', textColor[theme]);
 
   return (
-    <TouchableOpacity className={wrapperClass} onPress={onPress} disabled={disabled}>
-      {title && <Text className={`${textColor[theme]} font-semibold text-lg`}>{title}</Text>}
+    <TouchableOpacity style={wrapperStyle} onPress={onPress} disabled={disabled}>
+      {title && <Text style={textStyle}>{title}</Text>}
       {children && children}
     </TouchableOpacity>
   );

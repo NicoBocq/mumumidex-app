@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { City, Weather } from '../types';
-import { getHumidex } from '../utils';
+import { Weather } from '../../types';
+import { getHumidex } from '../../utils';
 
 // const weatherAdapter = createEntityAdapter();
 // const initialState = weatherAdapter.getInitialState();
+
+export type RawResponse = {
+  list: Weather[];
+};
 
 export const weatherApi = createApi({
   reducerPath: 'weatherApi',
@@ -23,11 +27,12 @@ export const weatherApi = createApi({
       }),
       providesTags: (result) =>
         result ? [...result?.map(({ id }) => ({ type: 'Weather' as const, id }))] : ['Weather'],
-      transformResponse: (response: { list: Weather[] }) => {
+      transformResponse: (response: RawResponse) => {
         return response.list
           .map((weather) => {
             return {
               ...weather,
+              // dt: new Date(weather.dt * 1000),
               humidex: getHumidex({ temp: weather.main.temp, humidity: weather.main.humidity }),
             };
           })
@@ -35,7 +40,7 @@ export const weatherApi = createApi({
         // return weatherAdapter.setAll(initialState, result);
       },
     }),
-    findCity: builder.query<City[], string>({
+    findCity: builder.query<Weather[], string>({
       query: (city) => ({
         url: 'find',
         params: {
@@ -44,7 +49,7 @@ export const weatherApi = createApi({
           lang: 'en',
         },
       }),
-      transformResponse: (response: { list: City[] }) => {
+      transformResponse: (response: RawResponse) => {
         return response.list;
       },
     }),

@@ -2,11 +2,12 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
+import tw from 'twrnc';
 
-import { RootStackParamList } from '../RootApp';
-import { selectIds } from '../reducers/citiesSlice';
-import { useGetWeatherByIdsQuery } from '../services/weatherApi';
-import { Weather } from '../types';
+import { RootStackParamList } from '../../../RootApp';
+import { Weather } from '../../../types';
+import { selectIds } from '../../cities/citiesSlice';
+import { useGetWeatherByIdsQuery } from '../weatherApi';
 
 type DetailScreenProps = NativeStackScreenProps<RootStackParamList, 'Detail'>;
 
@@ -21,7 +22,7 @@ const Detail = (props: DetailScreenProps): JSX.Element => {
 
   return (
     <View>
-      <Text className="text-3xl">{item.name}</Text>
+      <Text style={tw.style('text-3xl')}>{item.name}</Text>
     </View>
   );
 };

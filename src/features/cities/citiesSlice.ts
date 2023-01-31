@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
 const initialState = {
   ids: [524901, 703448, 2643743, 2995468],
