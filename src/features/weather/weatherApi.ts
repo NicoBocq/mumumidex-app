@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Weather } from '../../types';
-import { getHumidex } from '../../utils';
+import { Weather } from '../../common/types';
+import { getHumidex } from '../../common/utils';
 
 // const weatherAdapter = createEntityAdapter();
 // const initialState = weatherAdapter.getInitialState();

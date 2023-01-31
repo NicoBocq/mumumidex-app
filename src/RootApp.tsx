@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import MHeader from './components/MHeader';
+import MHeader from './common/components/MHeader';
 import Add from './features/cities/screens/Add';
 import Detail from './features/weather/screens/Detail';
 import List from './features/weather/screens/List';

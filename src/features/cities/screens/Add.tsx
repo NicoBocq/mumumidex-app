@@ -2,11 +2,11 @@ import BottomSheet, { BottomSheetFlatList, BottomSheetTextInput } from '@gorhom/
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useRef, useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import tw from 'twrnc';
 
 import { RootStackParamList } from '../../../RootApp';
-import { useAppDispatch } from '../../../hooks/redux';
-import { City } from '../../../types';
+import { useAppDispatch } from '../../../common/hooks/redux';
+import { City } from '../../../common/types';
+import tw from '../../../lib/tailwind';
 import { useFindCityQuery } from '../../weather/weatherApi';
 import { addCityId } from '../citiesSlice';
 

@@ -2,10 +2,10 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
-import tw from 'twrnc';
 
 import { RootStackParamList } from '../../../RootApp';
-import { Weather } from '../../../types';
+import { Weather } from '../../../common/types';
+import tw from '../../../lib/tailwind';
 import { selectIds } from '../../cities/citiesSlice';
 import { useGetWeatherByIdsQuery } from '../weatherApi';
 

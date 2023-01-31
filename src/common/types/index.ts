@@ -10,7 +10,7 @@ export type Main = {
 export type Weather = {
   id: number;
   main: Main;
-  dt: Date;
+  dt: number;
   description: string;
   icon: string;
   name: string;

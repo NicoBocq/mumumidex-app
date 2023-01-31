@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import tw from 'twrnc';
+
+import tw from '../../lib/tailwind';
 
 export type MButtonProps = {
   onPress?: () => void;

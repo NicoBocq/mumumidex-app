@@ -2,8 +2,8 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View, SafeAreaView } from 'react-native';
-import tw from 'twrnc';
 
+import tw from '../../lib/tailwind';
 import MButton from './MButton';
 
 const MHeader = (props: NativeStackHeaderProps): JSX.Element => {

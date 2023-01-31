@@ -1,11 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { FlatList, Text, View, SafeAreaView } from 'react-native';
-import tw from 'twrnc';
 
 import { RootStackParamList } from '../../../RootApp';
-import MButton from '../../../components/MButton';
-import { useAppSelector } from '../../../hooks/redux';
+import MButton from '../../../common/components/MButton';
+import { useAppSelector } from '../../../common/hooks/redux';
+import tw from '../../../lib/tailwind';
 import { selectIds } from '../../cities/citiesSlice';
 import WeatherItem from '../components/WeatherItem';
 import { useGetWeatherByIdsQuery } from '../weatherApi';

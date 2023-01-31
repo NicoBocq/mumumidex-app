@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import { Text, View } from 'react-native';
 import { TouchableOpacity, Swipeable } from 'react-native-gesture-handler';
-import tw from 'twrnc';
 
-import MButton from '../../../components/MButton';
-import { useAppDispatch } from '../../../hooks/redux';
-import { Weather } from '../../../types';
-import { getHumidexBgClassColor } from '../../../utils';
+import MButton from '../../../common/components/MButton';
+import { useAppDispatch } from '../../../common/hooks/redux';
+import { Weather } from '../../../common/types';
+import { getHumidexBgClassColor } from '../../../common/utils';
+import tw from '../../../lib/tailwind';
 import { removeCity } from '../../cities/citiesSlice';
 
 type WeatherItemProps = {

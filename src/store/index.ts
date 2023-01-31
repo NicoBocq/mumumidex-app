@@ -12,8 +12,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 
-import citiesSlice from '../reducers/citiesSlice';
-import { weatherApi } from '../services/weatherApi';
+import citiesSlice from '../features/cities/citiesSlice';
+import { weatherApi } from '../features/weather/weatherApi';
 
 const rootReducer = combineReducers({
   [weatherApi.reducerPath]: weatherApi.reducer,
