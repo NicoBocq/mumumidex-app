@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import MHeader from './components/MHeader';
-import Add from './screens/Add';
-import Detail from './screens/Detail';
-import List from './screens/List';
+import Add from './features/cities/screens/Add';
+import Detail from './features/weather/screens/Detail';
+import List from './features/weather/screens/List';
 
 export type RootStackParamList = {
   List: undefined;
@@ -34,13 +34,13 @@ const RootApp = () => {
           component={Detail}
           options={{
             title: 'Detail',
-            presentation: 'modal',
           }}
         />
         <Stack.Screen
           name="Add"
           component={Add}
           options={{
+            headerShown: false,
             title: 'Add a city',
             presentation: 'transparentModal',
           }}
