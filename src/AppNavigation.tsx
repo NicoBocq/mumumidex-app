@@ -1,20 +1,20 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import {NavigationContainer} from '@react-navigation/native'
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import React from 'react'
 
-import MHeader from './common/components/MHeader';
-import Add from './features/cities/screens/Add';
-import Detail from './features/weather/screens/Detail';
-import List from './features/weather/screens/List';
+import MHeader from './common/components/MHeader'
+import Add from './features/cities/screens/Add'
+import Detail from './features/weather/screens/Detail'
+import List from './features/weather/screens/List'
 
 export type RootStackParamList = {
-  Add: undefined;
-  Detail: { id: number };
-  List: undefined;
-};
+  Add: undefined
+  Detail: {id: number}
+  List: undefined
+}
 
 const AppNavigation = () => {
-  const Stack = createNativeStackNavigator<RootStackParamList>();
+  const Stack = createNativeStackNavigator<RootStackParamList>()
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -46,7 +46,7 @@ const AppNavigation = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
+  )
+}
 
-export default AppNavigation;
+export default AppNavigation
