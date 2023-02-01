@@ -14,7 +14,9 @@ export type MButtonProps = {
   variant?: Variant;
   size?: Size;
   style?: string;
+  testID?: string;
 };
+
 export type Size = 'small' | 'medium' | 'large';
 export type Theme = 'primary' | 'secondary';
 export type Variant = 'ghost' | 'outline' | 'solid';
@@ -30,24 +32,23 @@ const MButton = (props: MButtonProps): JSX.Element => {
     theme = 'primary',
     size = 'large',
     style,
+    testID,
   } = props;
 
   const bgColor = {
     primary: 'bg-brand',
     secondary: 'bg-gray-300',
-    outlined: 'bg-transparent',
   };
 
   const textColor = {
     primary: 'text-white',
     secondary: 'text-black',
-    outlined: 'text-brand',
   };
 
   const spacing = {
-    small: 'py-0.5 px-1',
-    medium: 'py-1 px-2',
-    large: 'py-2 px-4',
+    small: 'p-1',
+    medium: 'p-2',
+    large: 'p-3',
   };
 
   const wrapperStyle = tw.style(
@@ -59,8 +60,15 @@ const MButton = (props: MButtonProps): JSX.Element => {
   const textwrapperStyle = tw.style('flex-row items-center justify-center');
   const textStyle = tw.style('text-white font-semibold text-lg', textColor[theme]);
 
+  const handlePress = () => {
+    if (disabled || loading) {
+      return;
+    }
+    onPress();
+  };
+
   return (
-    <TouchableOpacity style={wrapperStyle} onPress={onPress} disabled={disabled}>
+    <TouchableOpacity style={wrapperStyle} onPress={handlePress} testID={testID}>
       {title && <Text style={textStyle}>{title}</Text>}
       {children && children}
     </TouchableOpacity>
