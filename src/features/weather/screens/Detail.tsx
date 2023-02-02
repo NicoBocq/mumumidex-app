@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
-import React from 'react'
+import React, {useLayoutEffect} from 'react'
 import {View, Text} from 'react-native'
 import {useSelector} from 'react-redux'
 
@@ -12,13 +12,17 @@ import {useGetWeatherByIdsQuery} from '../weatherApi'
 type DetailScreenProps = NativeStackScreenProps<RootStackParamList, 'Detail'>
 
 const Detail = (props: DetailScreenProps): JSX.Element => {
-  const {route} = props
+  const {route, navigation} = props
   const {id} = route.params
   const ids = useSelector(selectIds)
 
   const item = useGetWeatherByIdsQuery(ids, {
     selectFromResult: ({data}) => data?.find((item: Weather) => item.id === id),
   })
+
+  useLayoutEffect(() => {
+    navigation.setOptions({title: item.name})
+  }, [item])
 
   return (
     <View>

@@ -26,7 +26,7 @@ const AppNavigation = () => {
           name="List"
           component={List}
           options={{
-            title: 'Weather',
+            title: 'MumuMidex',
           }}
         />
         <Stack.Screen
@@ -40,6 +40,7 @@ const AppNavigation = () => {
         <Stack.Screen
           name="Detail"
           component={Detail}
+          getId={({params}) => params.id.toString()}
           options={{
             title: 'Detail',
           }}

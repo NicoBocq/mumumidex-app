@@ -3,6 +3,8 @@ import {Text, TouchableOpacity} from 'react-native'
 import {Style} from 'twrnc/dist/esm/types'
 
 import tw from '../../lib/tailwind'
+import {Size, Theme, Variant} from '../types'
+import MICon from './MIcon'
 
 export type MButtonProps = {
   onPress?: () => void
@@ -16,12 +18,7 @@ export type MButtonProps = {
   size?: Size
   style?: string | Style
   testID?: string
-  rounded?: boolean
 }
-
-export type Size = 'small' | 'medium' | 'large'
-export type Theme = 'primary' | 'secondary'
-export type Variant = 'ghost' | 'outline' | 'solid'
 
 const MButton = (props: MButtonProps): JSX.Element => {
   const {
@@ -32,39 +29,60 @@ const MButton = (props: MButtonProps): JSX.Element => {
     disabled,
     variant = 'solid',
     theme = 'primary',
-    size = 'large',
+    size = 'lg',
     style,
     testID,
-    rounded = false,
+    icon,
+    ...restProps
   } = props
 
-  const bgColor = {
+  const isIconOnly = !!icon && !title
+  const isGhost = variant === 'ghost'
+  const isOutline = variant === 'outline'
+
+  const bgDict = {
     primary: 'bg-brand',
     secondary: 'bg-gray-300',
   }
 
-  const textColor = {
+  const borderDict = {
+    primary: 'border-brand',
+    secondary: 'border-gray-300',
+  }
+
+  const textColorDict = {
     primary: 'text-white',
     secondary: 'text-black',
   }
 
-  const spacing = {
-    small: 'p-1',
-    medium: 'p-2',
-    large: 'p-3',
+  const textSizeDict = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg',
   }
 
+  const spacingDict = {
+    sm: 'p-0.5',
+    md: 'p-1',
+    lg: 'p-2',
+  }
+
+  const bgStyle = isGhost ? 'bg-transparent' : bgDict[theme]
+  const borderStyle = isOutline ? 'border-transparent' : borderDict[theme]
+
   const wrapperStyle = tw.style(
-    'rounded-lg flex-row items-center justify-center',
+    'flex-row items-center justify-center',
+    bgDict[theme],
+    bgStyle,
+    borderStyle,
+    spacingDict[size],
+    isIconOnly ? 'rounded-full' : 'rounded-lg',
     style,
-    bgColor[theme],
-    spacing[size],
-    rounded && 'rounded-full',
   )
-  const textwrapperStyle = tw.style('flex-row items-center justify-center')
   const textStyle = tw.style(
-    'text-white font-semibold text-lg',
-    textColor[theme],
+    'font-semibold text-lg',
+    textColorDict[theme],
+    textSizeDict[size],
   )
 
   const handlePress = () => {
@@ -78,8 +96,14 @@ const MButton = (props: MButtonProps): JSX.Element => {
     <TouchableOpacity
       style={wrapperStyle}
       onPress={handlePress}
+      {...restProps}
       testID={testID}>
       {title && <Text style={textStyle}>{title}</Text>}
+      {!!icon && typeof icon === 'string' ? (
+        <MICon name={icon} size={size} style={textStyle} />
+      ) : icon ? (
+        icon
+      ) : null}
       {children && children}
     </TouchableOpacity>
   )

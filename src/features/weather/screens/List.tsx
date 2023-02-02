@@ -1,7 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import React, {useCallback} from 'react'
 import {FlatList, SafeAreaView, View} from 'react-native'
-import {PlusIcon} from 'react-native-heroicons/solid'
 
 import {RootStackParamList} from '../../../AppNavigation'
 import MAlert from '../../../common/components/MAlert'
@@ -12,7 +11,8 @@ import tw from '../../../lib/tailwind'
 import {selectIds} from '../../cities/citiesSlice'
 import WeatherItem from '../components/WeatherItem'
 import {useGetWeatherByIdsQuery} from '../weatherApi'
-type ListScreenProps = NativeStackScreenProps<RootStackParamList, 'List'>
+
+export type ListScreenProps = NativeStackScreenProps<RootStackParamList, 'List'>
 
 const List = ({navigation}: ListScreenProps): JSX.Element => {
   const ids = useAppSelector(selectIds)
@@ -54,10 +54,9 @@ const List = ({navigation}: ListScreenProps): JSX.Element => {
         <View style={tw.style('flex-row justify-center bg-ui')}>
           <MButton
             style={tw.style('-mt-6 border-4 border-white')}
-            rounded
-            onPress={() => navigation.navigate('Add')}>
-            <PlusIcon style={tw.style('text-white')} />
-          </MButton>
+            icon="plus"
+            onPress={() => navigation.navigate('Add')}
+          />
         </View>
       </SafeAreaView>
     </View>

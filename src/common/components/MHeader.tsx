@@ -21,10 +21,26 @@ const MHeader = (props: NativeStackHeaderProps): JSX.Element => {
 
       <View
         style={tw.style(
-          'h-12 px-4 bg-ui flex-row items-center justify-center',
+          'h-16 px-4 bg-ui flex-row items-center',
+          back ? 'justify-start' : 'justify-center',
         )}>
-        {back && <MButton title="back" onPress={handleBack} />}
-        <Text style={tw.style('text-3xl font-extrabold text-white')}>
+        {back && (
+          <MButton
+            onPress={handleBack}
+            icon="back"
+            theme="primary"
+            variant="ghost"
+            size="md"
+            style="-ml-1 mr-2"
+          />
+        )}
+        <Text
+          style={tw.style(
+            'text-3xl font-extrabold text-white flex-1',
+            back ? '' : 'text-center',
+          )}
+          ellipsizeMode="tail"
+          numberOfLines={1}>
           {options.title}
         </Text>
       </View>
