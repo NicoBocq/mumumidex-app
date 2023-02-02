@@ -1,6 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack'
 import React, {useCallback} from 'react'
 import {FlatList, SafeAreaView, View} from 'react-native'
+import {PlusIcon} from 'react-native-heroicons/solid'
 
 import {RootStackParamList} from '../../../AppNavigation'
 import MAlert from '../../../common/components/MAlert'
@@ -15,19 +16,20 @@ type ListScreenProps = NativeStackScreenProps<RootStackParamList, 'List'>
 
 const List = ({navigation}: ListScreenProps): JSX.Element => {
   const ids = useAppSelector(selectIds)
-  const {data, error, isLoading, refetch} = useGetWeatherByIdsQuery(ids)
+  const {data, isError, isLoading, isFetching, refetch} =
+    useGetWeatherByIdsQuery(ids)
 
   const renderItem = useCallback(({item}) => {
     return <WeatherItem item={item} navigation={navigation} />
   }, [])
 
-  if (error) {
+  if (isError) {
     return (
       <MAlert
         type="alert"
         message="Unable to get data from server :("
         onRefresh={refetch}
-        refreshing={isLoading}
+        refreshing={isFetching}
       />
     )
   }
@@ -38,7 +40,7 @@ const List = ({navigation}: ListScreenProps): JSX.Element => {
         data={data}
         ItemSeparatorComponent={() => <Separator />}
         keyExtractor={(item) => item.id.toString()}
-        refreshing={isLoading}
+        refreshing={isLoading || isFetching}
         onRefresh={refetch}
         renderItem={renderItem}
         getItemLayout={(_, index) => ({
@@ -48,13 +50,14 @@ const List = ({navigation}: ListScreenProps): JSX.Element => {
         })}
         contentContainerStyle={tw.style('bg-gray-100 px-4 py-4')}
       />
-      <SafeAreaView style={tw.style('bg-gray-800 ')}>
-        <View style={tw.style('flex-row justify-center bg-gray-800')}>
+      <SafeAreaView style={tw.style('bg-ui')}>
+        <View style={tw.style('flex-row justify-center bg-ui')}>
           <MButton
-            title="Add a city"
-            style={tw.style('-mt-6')}
-            onPress={() => navigation.navigate('Add')}
-          />
+            style={tw.style('-mt-6 border-4 border-white')}
+            rounded
+            onPress={() => navigation.navigate('Add')}>
+            <PlusIcon style={tw.style('text-white')} />
+          </MButton>
         </View>
       </SafeAreaView>
     </View>

@@ -1,10 +1,10 @@
-import React from 'react';
-import { View } from 'react-native';
+import React from 'react'
+import {View} from 'react-native'
 
-import tw from '../../lib/tailwind';
+import tw from '../../lib/tailwind'
 
 const Separator = () => {
-  return <View style={tw.style('h-4')} />;
-};
+  return <View style={tw.style('h-4')} />
+}
 
-export default Separator;
+export default Separator

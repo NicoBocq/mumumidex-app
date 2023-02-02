@@ -28,25 +28,33 @@ const WeatherItem = (props: WeatherItemProps): JSX.Element => {
   const formatDate = item.dt
 
   return (
-    <Swipeable renderRightActions={() => <MButton title="Remove" onPress={handleRemove} />}>
+    <Swipeable
+      renderRightActions={() => (
+        <MButton title="Remove" onPress={handleRemove} />
+      )}>
       <TouchableOpacity
         style={tw.style('shadow-sm rounded-lg p-4 bg-white h-26')}
         onPress={handleDetail}>
         <View style={tw.style('flex-row items-center justify-between flex-1')}>
           <View style={tw.style('flex-1 mr-4')}>
-            <Text style={tw.style('text-xl font-extrabold leading-5')}>{item.name}</Text>
-            <Text style={tw.style('text-sm text-gray-500')}>{item.sys.country}</Text>
-            <Text>{formatDate}</Text>
+            <Text style={tw.style('text-xl font-extrabold leading-5')}>
+              {item.name}
+            </Text>
+            <Text style={tw.style('text-gray-500 text-sm mt-1')}>
+              {formatDate}
+            </Text>
           </View>
           <View
             style={tw.style(
               'flex-col w-1/4 justify-center items-center rounded-lg flex-shrink-0',
               getHumidexBgClassColor(item),
             )}>
-            <Text style={tw.style('text-3xl text-white font-extrabold p-1')}>{item.humidex}</Text>
+            <Text style={tw.style('text-2xl text-white font-extrabold p-1')}>
+              {item.humidex}
+            </Text>
             <View
               style={tw.style(
-                'flex-row w-full justify-between items-center text-xs font-medium border-t border-white p-2',
+                'flex-row w-full justify-between items-center text-xs font-medium border-t border-white py-2 px-2',
               )}>
               <Text style={tw.style('text-white')}>{item.main.feels_like}</Text>
               <Text style={tw.style('text-white')}>{item.main.humidity}%</Text>
